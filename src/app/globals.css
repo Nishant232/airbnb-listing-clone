@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #222222;
+
+  /* Reserve CTA gradient — pixel-sampled directly from our own saved
+     reference/listing-page/01-title-host-highlights-booking-card.png
+     (left ~#e61e4e, mid ~#e31c5d, right ~#d80665), not copied from any
+     live source. The button reads as a left-to-right gradient at REST,
+     not just on hover — confirmed via pixel-reviewer + independent sampling.
+
+     Left stop uses --color-brand-gradient-start (the actual sampled
+     #e61e4e), not --color-brand (#ff385c) — a11y contrast audit found the
+     gradient was built reusing --color-brand for its left stop rather than
+     the sampled value documented right above, which meant white button
+     text sat at only 3.52:1 there (fails WCAG AA 4.5:1). The sampled value
+     is both MORE accurate to the reference and passes at 4.51:1 — using it
+     is a correction, not a design deviation. --color-brand itself is left
+     untouched since it's also used flat elsewhere (icon buttons, wordmark)
+     where it was already independently verified correct. */
+  --gradient-brand: linear-gradient(
+    to right,
+    var(--color-brand-gradient-start),
+    var(--color-brand-dark),
+    var(--color-brand-deep)
+  );
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Brand */
+  --color-brand: #ff385c;
+  --color-brand-dark: #e31c5d;
+  --color-brand-deep: #d80665;
+  /* Gradient-only left stop — the actual pixel-sampled reference value
+     (#e61e4e), distinct from --color-brand so the flat icon-button/wordmark
+     uses of --color-brand are unaffected. See --gradient-brand comment. */
+  --color-brand-gradient-start: #e61e4e;
+
+  /* Text */
+  --color-text-primary: #222222;
+  --color-text-secondary: #6a6a6a;
+  --color-text-muted: #b0b0b0;
+
+  /* Borders / surfaces */
+  --color-border-default: #dddddd;
+  --color-border-light: #ebebeb;
+  --color-surface: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Semantic */
+  --color-success: #008a05;
+  --color-map-water: #aadaff;
+  --color-map-land: #d8ecd1;
+  --color-map-accent: #a8d5a2;
+
+  /* Avatar initials fallback palette — sampled from the review-card and
+     co-host initial-letter avatars in reference/listing-page (e.g. Amit,
+     Vedant, Shruti, Amisha). Each pair is a light flat background with a
+     darker same-hue text color. Assigned deterministically per name by
+     Avatar.tsx, not randomly, so a given person's initial always renders
+     the same color across the page.
+
+     Text colors darkened slightly from their originally-sampled values —
+     a11y contrast audit found all 4 failed WCAG AA (4.5:1) against their
+     own background, ranging from 2.73:1 to 4.27:1. Each was darkened by
+     the smallest amount needed to clear 4.5:1 (4-25% toward black,
+     same hue), computed programmatically rather than eyeballed, so the
+     visual identity (same background, same hue family) is preserved. */
+  --color-avatar-1-bg: #f7ede2;
+  --color-avatar-1-text: #8b601e; /* was #c1852a (2.73:1) -> 4.79:1 */
+  --color-avatar-2-bg: #efeaf7;
+  --color-avatar-2-text: #765ea7; /* was #8b6fc4 (3.44:1) -> 4.51:1 */
+  --color-avatar-3-bg: #fde7ef;
+  --color-avatar-3-text: #c33165; /* was #d4356e (3.94:1) -> 4.52:1 */
+  --color-avatar-4-bg: #e7f0fd;
+  --color-avatar-4-text: #386ac4; /* was #3a6ecc (4.27:1) -> 4.56:1 */
+
+  --font-sans: var(--font-inter);
+
+  /* Font sizes — named after role, not a generic numeric scale, so usage
+     stays self-documenting (text-title, text-body, etc.). Values matched
+     against reference/design-tokens.md's typography table. Each carries its
+     own paired line-height via the Tailwind v4 --text-*--line-height convention. */
+  --text-stat: 4rem; /* 64px — big rating number, e.g. "4.95" */
+  --text-stat--line-height: 1.1;
+  --text-modal-title: 1.875rem; /* 30px — Photo tour / modal titles */
+  --text-modal-title--line-height: 1.2;
+  --text-title: 1.6875rem; /* 27px — H1 listing title */
+  --text-title--line-height: 1.2;
+  --text-heading: 1.4375rem; /* 23px — H2 section headings */
+  --text-heading--line-height: 1.25;
+  --text-card-title: 1.1875rem; /* 19px — card/subsection titles, host name */
+  --text-card-title--line-height: 1.3;
+  --text-body: 0.9688rem; /* ~15.5px — body copy, descriptions, reviews */
+  --text-body--line-height: 1.5;
+  --text-meta: 0.8438rem; /* ~13.5px — meta text, captions, dates */
+  --text-meta--line-height: 1.4;
+
+  /* Radii */
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 6px 16px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 8px 28px rgba(0, 0, 0, 0.28);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
